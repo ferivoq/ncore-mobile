@@ -1,27 +1,33 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Searchbar, IconButton, MD3Colors } from 'react-native-paper';
-
-import MyComponent from '../../components/DownloadList';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import HomeCards from '../../components/HomeCards';
+import HomeAppbar from '../../components/HomeAppbar';
 
 const HomeScreen = () => {
-    const [searchQuery, setSearchQuery] = React.useState('');
-
     return (
-        <View style={{ margin: 20, marginTop: 55 }}>
-            <Searchbar
-                placeholder="Search"
-                onChangeText={setSearchQuery}
-                value={searchQuery}
-            />
-
-            <MyComponent />
+        <View>
+            <HomeAppbar />
+            <ScrollView
+                style={styles.container}
+                showsVerticalScrollIndicator={false} // This will hide the scroll indicator
+            >
+                {/* Added extra View wrapper with style for margin control */}
+                <View style={styles.card}><HomeCards /></View>
+                <View style={styles.card}><HomeCards /></View>
+                <View style={styles.card}><HomeCards /></View>
+            </ScrollView>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-
-})
+    container: {
+        marginHorizontal: 20,
+        marginTop: 10,
+    },
+    card: {
+        marginBottom: 20, // Ensure margin is applied around HomeCards
+    }
+});
 
 export default HomeScreen;

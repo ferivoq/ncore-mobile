@@ -5,7 +5,10 @@ import { useTheme } from 'react-native-paper';
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme';
 import { useColorScheme } from 'react-native';
 
+import DownloadScreen from './screens/download/DownloadScreen';
 import HomeScreen from './screens/home/HomeScreen';
+import { NativeRouter, Routes, Route } from 'react-router-native';
+import SettingsScreen from './screens/settings/SettingsScreen';
 
 export default function App() {
   const colorScheme = useColorScheme();
@@ -15,10 +18,6 @@ export default function App() {
     colorScheme === 'dark'
       ? { ...MD3DarkTheme, colors: theme.dark }
       : { ...MD3LightTheme, colors: theme.light };
-
-  const DownloadRoute = () => <Text>Letöltés</Text>;
-  const RequestsRoute = () => <Text>Kérések</Text>;
-  const ProfileRoute = () => <Text>Fiókom</Text>;
 
   // Move the state and variables here
   const [index, setIndex] = React.useState(0);
@@ -31,19 +30,32 @@ export default function App() {
 
   const renderScene = BottomNavigation.SceneMap({
     home: () => <HomeScreen />,
-    download: DownloadRoute,
-    requests: RequestsRoute,
-    profile: ProfileRoute,
+    download: () => <DownloadScreen />,
+    requests: () => <Text>Kérések</Text>,
+    profile: () => <Text>Fiókom</Text>,
   });
 
   return (
     <PaperProvider theme={paperTheme}>
       <View style={{ flex: 1 }}>
-        <BottomNavigation
-          navigationState={{ index, routes }}
-          onIndexChange={setIndex}
-          renderScene={renderScene}
-        />
+        <NativeRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <BottomNavigation
+                navigationState={{ index, routes }}
+                onIndexChange={setIndex}
+                renderScene={renderScene}
+              />
+              }
+            />
+            <Route
+              path="/settings"
+              element={<SettingsScreen />}
+            />
+          </Routes>
+        </NativeRouter>
       </View>
     </PaperProvider>
 
