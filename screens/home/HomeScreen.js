@@ -15,6 +15,8 @@ const HomeScreen = () => {
                 <View style={styles.card}><HomeCards /></View>
                 <View style={styles.card}><HomeCards /></View>
                 <View style={styles.card}><HomeCards /></View>
+                {/* Additional bottom padding View */}
+                <View style={{ height: 120 }}></View>
             </ScrollView>
         </View>
     );
